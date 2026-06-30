@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  email        String       @unique
+  passwordHash String
+  createdAt    DateTime     @default(now())
+  predictions  Prediction[]
+}
+
+model Prediction {
+  id                   String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId               String   @db.ObjectId
+  user                 User     @relation(fields: [userId], references: [id])
+  patientIdentifier    String?
+  pregnancies          Float
+  glucose              Float
+  bloodPressure        Float
+  skinThickness        Float
+  insulin              Float
+  bmi                  Float
+  diabetesPedigree     Float
+  age                  Float
+  predictionResult     Int      // 0 = No Diabetes, 1 = Diabetes
+  confidenceScore      Float    // 0.0 to 1.0
+  createdAt            DateTime @default(now())
+}
+
