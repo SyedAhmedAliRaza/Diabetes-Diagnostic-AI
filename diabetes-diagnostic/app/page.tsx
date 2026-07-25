@@ -7,7 +7,6 @@ export default function LandingPage() {
   const router = useRouter();
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex flex-col font-sans">
-      {/* Navigation */}
       <nav className="bg-white/60 backdrop-blur-xl border-b border-white/50 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-0">
@@ -28,9 +27,7 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section className="flex-1 max-w-7xl mx-auto px-6 py-20 flex flex-col lg:flex-row items-center justify-between gap-12 w-full">
-        {/* Left Content */}
         <div className="flex-1 space-y-6 max-w-2xl">
           <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight tracking-tight">
             AI-Powered Diabetes Diagnosis.<br />
@@ -51,7 +48,6 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Right Content - Brain Illustration */}
         <div className="flex-1 flex justify-center lg:justify-end">
           <div className="relative w-full max-w-lg aspect-square opacity-90 flex items-center justify-center">
             <img src="/hero-image.png" alt="AI Brain Diagnostic Network" className="w-full h-full object-contain drop-shadow-sm" />
@@ -59,7 +55,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Feature Cards - How Our Technology Works */}
       <section className="max-w-7xl mx-auto px-6 pb-24 w-full">
         <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">How Our Technology Works</h2>
 
@@ -90,7 +85,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="mt-auto py-8 text-center">
         <p className="text-sm text-gray-500 font-medium">© 2026 Diabetes Diagnostic AI. All rights reserved</p>
       </footer>

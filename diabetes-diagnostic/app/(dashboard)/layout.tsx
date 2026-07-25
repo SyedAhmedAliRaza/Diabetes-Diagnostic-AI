@@ -28,7 +28,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="flex h-screen bg-gray-50 overflow-hidden font-sans">
-      {/* Sidebar Overlay for Mobile */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-gray-900/50 z-20 md:hidden"
@@ -36,13 +35,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         />
       )}
 
-      {/* Sidebar */}
       <aside className={`
         fixed md:relative inset-y-0 left-0 bg-[#F3F4F6] ${isSidebarOpen ? 'border-r border-gray-200' : 'border-r-0'} flex flex-col z-30 overflow-hidden whitespace-nowrap
         transition-all duration-300 ease-in-out
         ${isSidebarOpen ? "w-64 translate-x-0" : "w-64 -translate-x-full md:w-0 md:translate-x-0"}
       `}>
-        {/* Brand */}
         <div className="h-16 flex items-center px-4 border-b border-gray-200/50">
           <button onClick={() => router.push("/overview")} className="flex items-center gap-1 group w-full text-left cursor-pointer">
             <img src="/logo.png" alt="Diabetes Diagnostic Logo" className="w-10 h-10 object-contain" />
@@ -52,7 +49,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </button>
         </div>
 
-        {/* Navigation */}
         <nav className="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto">
           {navLinks.map(({ href, label, icon: Icon }) => {
             const isActive = pathname === href || pathname.startsWith(href + "/");
@@ -72,7 +68,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           })}
         </nav>
 
-        {/* Sidebar Footer (Optional) */}
         <div className="p-4 border-t border-gray-200/50">
           <div className="bg-white rounded-lg p-3 border border-gray-100 shadow-sm flex flex-col items-center justify-center gap-2">
             <div className="flex items-center gap-1.5">
@@ -84,11 +79,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
       </aside>
 
-      {/* Main Container */}
       <div className="flex-1 flex flex-col h-full overflow-hidden w-full relative">
-        {/* Top Header */}
         <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-8 shrink-0 z-10">
-          {/* Hamburger Menu & Global Search */}
           <div className="flex items-center flex-1 max-w-md relative">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -109,10 +101,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </div>
           </div>
 
-          {/* Spacer for mobile */}
           <div className="sm:hidden flex-1"></div>
 
-          {/* User Profile */}
           <div className="relative">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -159,7 +149,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         </header>
 
-        {/* Page Content */}
         <main className="flex-1 overflow-y-auto bg-[#F9FAFB] p-8">
           <div className="max-w-7xl mx-auto">
             {children}

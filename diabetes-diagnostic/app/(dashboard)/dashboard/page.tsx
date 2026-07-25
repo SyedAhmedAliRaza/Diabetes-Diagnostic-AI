@@ -23,7 +23,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-// ─── Types ───────────────────────────────────────────────────
 interface PredictionResult {
   id: string;
   prediction: number;
@@ -49,7 +48,6 @@ interface FormData {
   age: string;
 }
 
-// ─── Field Definitions ────────────────────────────────────────
 const FIELDS = [
   { key: "pregnancies", label: "Pregnancies", unit: "", min: 0, max: 20, step: 1, placeholder: "Number of times" },
   { key: "insulin", label: "Insulin", unit: "mu U/ml", min: 0, max: 850, step: 1, placeholder: "2-Hour serum" },
@@ -61,7 +59,6 @@ const FIELDS = [
   { key: "age", label: "Age", unit: "Years", min: 1, max: 120, step: 1, placeholder: "Age" },
 ] as const;
 
-// ─── Risk Gauge Component for Modal ──────────────────────────────────────
 function RiskGauge({ probability }: { probability: number }) {
   const pct = Math.round(probability * 100);
   const data = [
@@ -99,7 +96,6 @@ function RiskGauge({ probability }: { probability: number }) {
   );
 }
 
-// ─── Main Dashboard Page ───────────────────────────────────────
 export default function DashboardPage() {
   const { data: session } = useSession();
   const [activeTab, setActiveTab] = useState<"manual" | "batch">("manual");
@@ -112,13 +108,11 @@ export default function DashboardPage() {
   const [result, setResult] = useState<PredictionResult | null>(null);
   const [submitError, setSubmitError] = useState("");
 
-  // Batch state
   const [batchFile, setBatchFile] = useState<File | null>(null);
   const [batchResults, setBatchResults] = useState<PredictionResult[]>([]);
   const [batchLoading, setBatchLoading] = useState(false);
   const [batchProgress, setBatchProgress] = useState(0);
 
-  // Recent activity
   const [recentActivities, setRecentActivities] = useState<any[]>([]);
 
   useEffect(() => {
@@ -130,9 +124,8 @@ export default function DashboardPage() {
         }
       })
       .catch(console.error);
-  }, [result]); // Refresh when a new diagnostic is run
+  }, [result]);
 
-  // ── Validation ──────────────────────────────────────────────
   const validate = (): boolean => {
     const newErrors: Partial<FormData> = {};
     FIELDS.forEach(({ key, label }) => {
@@ -147,7 +140,6 @@ export default function DashboardPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // ── Manual Submit ───────────────────────────────────────────
   const handleManualSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitError("");
@@ -186,7 +178,6 @@ export default function DashboardPage() {
     }
   };
 
-  // ── Batch Drop Zone ─────────────────────────────────────────
   const onDrop = useCallback((files: File[]) => {
     if (files[0]) setBatchFile(files[0]);
   }, []);
@@ -203,7 +194,6 @@ export default function DashboardPage() {
     const dateStr = new Date().toLocaleString();
     const userId = session?.user?.email || "Unknown";
 
-    // Create a print container that will only be visible when printing
     const printContainer = document.createElement('div');
     printContainer.id = 'print-container';
     printContainer.innerHTML = `
@@ -254,10 +244,8 @@ export default function DashboardPage() {
       </div>
     `;
 
-    // Append to body
     document.body.appendChild(printContainer);
 
-    // Add a style tag to hide everything else during print
     const style = document.createElement('style');
     style.innerHTML = `
       @media print {
@@ -275,10 +263,8 @@ export default function DashboardPage() {
     `;
     document.head.appendChild(style);
 
-    // Wait for the injected DOM to render
     setTimeout(() => {
       window.print();
-      // Cleanup after browser print dialog captures the page
       setTimeout(() => {
         document.body.removeChild(printContainer);
         document.head.removeChild(style);
@@ -332,7 +318,6 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      {/* Page Header */}
       <div>
         <h1 className="text-xl text-gray-900 font-bold">
           Welcome back, Dr. {session?.user?.name}. Let's begin the assessment.
@@ -340,10 +325,8 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
-        {/* Main Content Area */}
         <div className="xl:col-span-3">
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-            {/* Tabs */}
             <div className="flex border-b border-gray-100 px-6 pt-4 gap-6">
               {(["manual", "batch"] as const).map((tab) => (
                 <button
@@ -360,7 +343,6 @@ export default function DashboardPage() {
             </div>
 
             <div className="p-6">
-              {/* ── Manual Entry Tab ── */}
               {activeTab === "manual" && (
                 <form onSubmit={handleManualSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
@@ -396,7 +378,6 @@ export default function DashboardPage() {
                     ))}
                   </div>
 
-                  {/* Submit Error */}
                   {submitError && (
                     <div className="flex items-center gap-2.5 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
                       <AlertCircle className="w-4 h-4 flex-shrink-0" />
@@ -404,7 +385,6 @@ export default function DashboardPage() {
                     </div>
                   )}
 
-                  {/* Action Buttons */}
                   <div className="flex items-center gap-4 pt-2">
                     <button
                       type="submit"
@@ -418,7 +398,6 @@ export default function DashboardPage() {
                 </form>
               )}
 
-              {/* ── Batch Upload Tab ── */}
               {activeTab === "batch" && (
                 <div className="space-y-6">
                   <div
@@ -468,7 +447,6 @@ export default function DashboardPage() {
                     </button>
                   )}
 
-                  {/* Batch progress bar */}
                   {batchLoading && (
                     <div className="w-full bg-gray-100 rounded-full h-2">
                       <div
@@ -478,7 +456,6 @@ export default function DashboardPage() {
                     </div>
                   )}
 
-                  {/* Batch Results Table */}
                   {batchResults.length > 0 && (
                     <div className="border border-gray-200 rounded-xl overflow-hidden">
                       <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
@@ -534,7 +511,6 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Right Sidebar */}
         <div className="space-y-6">
           <div className="bg-white rounded-xl border border-gray-100 p-5 shadow-sm">
             <h3 className="text-base font-bold text-gray-900 mb-4">Recent Activity</h3>
@@ -565,7 +541,6 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ── Risk Modal Overlay ── */}
       {result && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm" onClick={() => setResult(null)}></div>

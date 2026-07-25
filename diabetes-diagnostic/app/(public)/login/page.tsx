@@ -43,7 +43,6 @@ function LoginForm() {
   return (
     <div className="min-h-screen bg-[#f4f6f9] flex items-center justify-center p-4 font-sans">
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 w-full max-w-[400px]">
-        {/* Brand */}
         <div className="flex flex-col items-center text-center mb-8">
           <div className="flex items-center justify-center mb-0">
             <img src="/logo.png" alt="Diabetes Diagnostic Logo" className="w-20 h-20 object-contain" />
@@ -53,7 +52,6 @@ function LoginForm() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Success message after registration */}
           {justRegistered && (
             <div className="flex items-center gap-2.5 bg-green-50 border border-green-200 text-green-700 rounded-lg px-4 py-3 text-sm">
               <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
@@ -61,7 +59,6 @@ function LoginForm() {
             </div>
           )}
 
-          {/* Error */}
           {error && (
             <div className="flex items-center gap-2.5 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
               <AlertCircle className="w-4 h-4 flex-shrink-0" />
@@ -69,7 +66,6 @@ function LoginForm() {
             </div>
           )}
 
-          {/* Email */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-600 mb-1.5">
               Email Address
@@ -113,7 +109,6 @@ function LoginForm() {
             </div>
           </div>
 
-          {/* Submit */}
           <button
             type="submit"
             disabled={loading}

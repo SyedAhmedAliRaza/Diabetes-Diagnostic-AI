@@ -51,7 +51,6 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-[#f4f6f9] flex items-center justify-center p-4 font-sans">
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 w-full max-w-[400px]">
-        {/* Brand */}
         <div className="flex flex-col items-center text-center mb-8">
           <div className="flex items-center justify-center mb-0">
             <img src="/logo.png" alt="Diabetes Diagnostic Logo" className="w-20 h-20 object-contain" />
@@ -61,7 +60,6 @@ export default function RegisterPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Error */}
           {error && (
             <div className="flex items-center gap-2.5 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
               <AlertCircle className="w-4 h-4 flex-shrink-0" />
@@ -69,7 +67,6 @@ export default function RegisterPage() {
             </div>
           )}
 
-          {/* Name */}
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-600 mb-1.5">
               Full Name
@@ -85,7 +82,6 @@ export default function RegisterPage() {
             />
           </div>
 
-          {/* Email */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-600 mb-1.5">
               Email Address
@@ -149,7 +145,6 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Submit */}
           <button
             type="submit"
             disabled={loading}

@@ -96,7 +96,6 @@ function HistoryContent() {
   const [sortField, setSortField] = useState<"createdAt" | "confidenceScore">("createdAt");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
-  // Sync initialSearch if URL changes
   useEffect(() => {
     if (initialSearch !== search) {
       setSearch(initialSearch);
@@ -104,13 +103,11 @@ function HistoryContent() {
     }
   }, [initialSearch]);
 
-  // Debounce search
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search), 400);
     return () => clearTimeout(timer);
   }, [search]);
 
-  // Reset to page 1 on search change
   useEffect(() => {
     setPage(1);
   }, [debouncedSearch]);
@@ -157,7 +154,6 @@ function HistoryContent() {
     const dateStr = formatDate(selectedPrediction.createdAt);
     const userId = session?.user?.email || "Unknown";
 
-    // Create a print container that will only be visible when printing
     const printContainer = document.createElement('div');
     printContainer.id = 'print-container';
     printContainer.innerHTML = `
@@ -234,10 +230,8 @@ function HistoryContent() {
       </div>
     `;
 
-    // Append to body
     document.body.appendChild(printContainer);
 
-    // Add a style tag to hide everything else during print
     const style = document.createElement('style');
     style.innerHTML = `
       @media print {
@@ -255,10 +249,8 @@ function HistoryContent() {
     `;
     document.head.appendChild(style);
 
-    // Wait for the injected DOM to render
     setTimeout(() => {
       window.print();
-      // Cleanup after browser print dialog captures the page
       setTimeout(() => {
         document.body.removeChild(printContainer);
         document.head.removeChild(style);
@@ -266,12 +258,10 @@ function HistoryContent() {
     }, 100);
   };
 
-  // Data is now sorted by the backend API
   const sortedPredictions = data ? data.predictions : [];
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Prediction History</h1>
@@ -288,11 +278,8 @@ function HistoryContent() {
         </button>
       </div>
 
-      {/* Table Card */}
       <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-        {/* Toolbar */}
         <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-4 flex-wrap">
-          {/* Search */}
           <div className="flex-1 min-w-48 relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
@@ -304,7 +291,6 @@ function HistoryContent() {
             />
           </div>
 
-          {/* Sort */}
           <div className="flex items-center gap-2">
             <span className="text-xs text-gray-500 font-medium">Sort by:</span>
             {["createdAt", "confidenceScore"].map((field) => (
@@ -332,7 +318,6 @@ function HistoryContent() {
           </div>
         </div>
 
-        {/* Table */}
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -435,7 +420,6 @@ function HistoryContent() {
           </table>
         </div>
 
-        {/* Pagination */}
         {data && data.totalPages > 1 && (
           <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between">
             <p className="text-sm text-gray-500">
@@ -461,7 +445,6 @@ function HistoryContent() {
         )}
       </div>
 
-      {/* Detail Modal */}
       {selectedPrediction && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm" onClick={() => setSelectedPrediction(null)}></div>

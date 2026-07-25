@@ -5,7 +5,6 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-// Types
 interface OverviewData {
   summary: {
     totalPredictions: number;
@@ -72,7 +71,6 @@ export default function OverviewPage() {
     );
   }
 
-  // Find recent high risk cases for action items
   const actionItems = data.recentActivity
     .filter(a => a.predictionResult === 1 && a.confidenceScore >= 0.5)
     .slice(0, 3);
@@ -88,13 +86,11 @@ export default function OverviewPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Clinical Overview</h1>
         <p className="text-gray-500 mt-1">High-level insights and recent diagnostic activity across all patients.</p>
       </div>
 
-      {/* Impact Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-between">
           <div className="flex items-center gap-4">
@@ -170,7 +166,6 @@ export default function OverviewPage() {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        {/* Long-Term Trend Chart */}
         <div className="xl:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
             <div>
@@ -210,7 +205,6 @@ export default function OverviewPage() {
           </div>
         </div>
 
-        {/* Action Items Sidebar */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
           <div className="px-6 py-5 border-b border-gray-100">
             <h2 className="text-lg font-bold text-gray-900">Clinical Action Items</h2>
@@ -243,7 +237,6 @@ export default function OverviewPage() {
         </div>
       </div>
 
-      {/* Recent Activity Table */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
           <div>

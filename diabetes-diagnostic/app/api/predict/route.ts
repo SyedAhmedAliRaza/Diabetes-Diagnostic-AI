@@ -23,7 +23,6 @@ export async function POST(req: NextRequest) {
       patientIdentifier,
     } = body;
 
-    // Validate required fields
     const required = { pregnancies, glucose, bloodPressure, skinThickness, insulin, bmi, diabetesPedigree, age };
     for (const [key, value] of Object.entries(required)) {
       if (value === undefined || value === null || value === "") {
@@ -34,7 +33,6 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Forward to FastAPI backend
     let prediction: number;
     let probability: number;
     let status: string;
@@ -65,7 +63,6 @@ export async function POST(req: NextRequest) {
       status = fastapiData.status;
     } catch (fastapiError) {
       console.warn("FastAPI unavailable, using mock prediction:", fastapiError);
-      // Mock prediction when FastAPI is not running (for UI testing)
       const glucoseRisk = Number(glucose) > 140 ? 0.3 : 0;
       const bmiRisk = Number(bmi) > 30 ? 0.2 : 0;
       const ageRisk = Number(age) > 45 ? 0.1 : 0;
@@ -75,7 +72,6 @@ export async function POST(req: NextRequest) {
       status = prediction === 1 ? "🔴 Diabetes (Mock)" : "🟢 No Diabetes (Mock)";
     }
 
-    // Determine high-risk features for display
     const featureBreakdown = [
       { name: "Glucose", value: Number(glucose), unit: "mg/dL", high: Number(glucose) > 140, optimal: Number(glucose) <= 100 },
       { name: "BMI", value: Number(bmi), unit: "kg/m²", high: Number(bmi) > 30, optimal: Number(bmi) <= 24.9 },
@@ -87,7 +83,6 @@ export async function POST(req: NextRequest) {
       { name: "Diabetes Pedigree", value: Number(diabetesPedigree), unit: "", high: Number(diabetesPedigree) > 0.8, optimal: Number(diabetesPedigree) <= 0.4 },
     ];
 
-    // Save to database
     const saved = await prisma.prediction.create({
       data: {
         userId: (session?.user as any)?.id,
